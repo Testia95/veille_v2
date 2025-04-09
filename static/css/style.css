@@ -128,3 +128,33 @@ h1, h2 {
     padding: 6px 12px;
     border-radius: 4px;
 }
+.site-header {
+    background-color: #1e1b2e;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.site-header h1 a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.5rem;
+}
+
+.main-nav a {
+    color: #aaa;
+    margin-left: 15px;
+    text-decoration: none;
+}
+
+.main-nav a:hover {
+    color: #fff;
+}
+
+.media-description {
+    margin-bottom: 1rem;
+    background: #2d2740;
+    padding: 10px;
+    border-radius: 6px;
+}

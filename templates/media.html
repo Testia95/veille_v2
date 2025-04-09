@@ -4,6 +4,12 @@
 <a class="retour" href="{{ url_for('index') }}">← Retour à l'accueil</a>
 
 <h1>{{ media }}</h1>
+
+<details class="media-description">
+    <summary>📝 À propos de {{ media }}</summary>
+    <p>{{ description }}</p>
+</details>
+
 <p>Vidéos des 2 derniers mois</p>
 
 <div class="video-grid">

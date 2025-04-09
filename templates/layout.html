@@ -2,11 +2,21 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Veille Politique</title>
+    <title>Medianaute</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <script defer src="{{ url_for('static', filename='js/script.js') }}"></script>
 </head>
 <body>
+    <header class="site-header">
+        <h1><a href="{{ url_for('index') }}">Medianaute</a></h1>
+        <nav class="main-nav">
+            <a href="{{ url_for('videos') }}">Vidéos</a>
+            <a href="{{ url_for('shorts') }}">Shorts</a>
+            <a href="{{ url_for('decryptage') }}">Décryptage</a>
+            <a href="{{ url_for('manifeste') }}">Manifeste</a>
+        </nav>
+    </header>
+
     <div class="container">
         <aside class="sidebar">
             <h2>Médias</h2>
@@ -14,9 +24,7 @@
                 {% for media in flux_dict|sort %}
                 <li>
                     <details>
-                        <summary>
-                            <a href="{{ url_for('page_media', nom=media) }}">{{ media }}</a>
-                        </summary>
+                        <summary><a href="{{ url_for('page_media', nom=media) }}">{{ media }}</a></summary>
                         <ul class="media-videos">
                             {% for v in sidebar_videos[media] %}
                             <li>

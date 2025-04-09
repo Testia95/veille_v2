@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h1>Shorts</h1>
+<div class="video-grid">
+    {% for video in videos_recents[:10] %}
+    <div class="video-card" data-video-id="{{ video.id }}">
+        <a href="{{ video.lien }}" target="_blank">
+            <img src="{{ video.thumbnail }}" alt="{{ video.titre }}">
+        </a>
+        <p class="titre">{{ video.titre }}</p>
+        <p class="source">📰 {{ video.media }}</p>
+        <p class="date">📅 {{ video.date }}</p>
+    </div>
+    {% endfor %}
+</div>
+
+<h1>Par orientation</h1>
+<div class="orientation-grid">
+    {% for orientation in ['Gauche', 'Centre', 'Droite', 'Autre'] %}
+        <div class="orientation-col">
+            <h2>{{ orientation }}</h2>
+            {% for video in videos_par_orientation[orientation] %}
+            <div class="video-card" data-video-id="{{ video.id }}">
+                <a href="{{ video.lien }}" target="_blank">
+                    <img src="{{ video.thumbnail }}" alt="{{ video.titre }}">
+                </a>
+                <p class="titre">{{ video.titre }}</p>
+                <p class="source">📰 {{ video.media }}</p>
+                <p class="date">📅 {{ video.date }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
