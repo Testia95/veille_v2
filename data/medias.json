@@ -1,0 +1,23 @@
+{
+    "Blast": {
+      "flux": "https://www.youtube.com/feeds/videos.xml?channel_id=UC__xRB5L4toU9yYawt_lIKg",
+      "orientation": "Gauche"
+    },
+    "LeMédia": {
+      "flux": "https://www.youtube.com/feeds/videos.xml?channel_id=UCT67YOMntJxfRnO_9bXDpvw",
+      "orientation": "Gauche"
+    },
+    "Thinkerview": {
+      "flux": "https://www.youtube.com/feeds/videos.xml?channel_id=UCQgWpmt02UtJkyO32HGUASQ",
+      "orientation": "Autre"
+    },
+    "Frontières": {
+      "flux": "https://www.youtube.com/feeds/videos.xml?channel_id=UCysox6U9HnqgCiJ-Pd-Jy_w",
+      "orientation": "Droite"
+    },
+    "Elucid": {
+      "flux": "https://www.youtube.com/feeds/videos.xml?channel_id=UCkgO4A3Fzm5D9Xu1Y_4vCKQ",
+      "orientation": "Centre"
+    }
+  }
+  
