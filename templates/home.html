@@ -15,23 +15,23 @@
     {% endfor %}
 </div>
 
-<hr>
-
 <h1>Par orientation</h1>
-{% for orientation, videos in videos_par_orientation.items() %}
-    <h2>{{ orientation }}</h2>
-    <div class="video-grid">
-        {% for video in videos %}
-        <div class="video-card" data-video-id="{{ video.id }}">
-            <a href="{{ video.lien }}" target="_blank">
-                <img src="{{ video.thumbnail }}" alt="{{ video.titre }}">
-            </a>
-            <p class="titre">{{ video.titre }}</p>
-            <p class="source">📰 {{ video.media }}</p>
-            <p class="date">📅 {{ video.date }}</p>
+<div class="orientation-grid">
+    {% for orientation in ['Gauche', 'Centre', 'Droite', 'Autre'] %}
+        <div class="orientation-col">
+            <h2>{{ orientation }}</h2>
+            {% for video in videos_par_orientation[orientation] %}
+            <div class="video-card" data-video-id="{{ video.id }}">
+                <a href="{{ video.lien }}" target="_blank">
+                    <img src="{{ video.thumbnail }}" alt="{{ video.titre }}">
+                </a>
+                <p class="titre">{{ video.titre }}</p>
+                <p class="source">📰 {{ video.media }}</p>
+                <p class="date">📅 {{ video.date }}</p>
+            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
-    </div>
-{% endfor %}
+    {% endfor %}
+</div>
 
 {% endblock %}

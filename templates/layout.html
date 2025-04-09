@@ -8,7 +8,6 @@
 </head>
 <body>
     <div class="container">
-        <!-- 🎛️ Barre latérale avec tous les médias -->
         <aside class="sidebar">
             <h2>Médias</h2>
             <ul class="media-list">
@@ -18,8 +17,12 @@
                         <summary>
                             <a href="{{ url_for('page_media', nom=media) }}">{{ media }}</a>
                         </summary>
-                        <ul class="media-videos" id="menu-{{ media|replace(' ', '_') }}">
-                            <!-- Ce bloc est rempli dans home.html dynamiquement -->
+                        <ul class="media-videos">
+                            {% for v in sidebar_videos[media] %}
+                            <li>
+                                <a href="{{ v.lien }}" target="_blank">{{ v.titre[:40] }}…</a>
+                            </li>
+                            {% endfor %}
                         </ul>
                     </details>
                 </li>
@@ -27,7 +30,6 @@
             </ul>
         </aside>
 
-        <!-- 🧱 Contenu principal injecté depuis les autres pages -->
         <main class="main-content">
             {% block content %}{% endblock %}
         </main>

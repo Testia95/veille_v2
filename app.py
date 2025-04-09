@@ -7,18 +7,14 @@ import time
 
 app = Flask(__name__)
 
-# 🔄 Charge les flux RSS et orientations politiques depuis le fichier JSON
 with open("data/medias.json", "r", encoding="utf-8") as f:
     flux_dict = json.load(f)
 
-# 🧠 Prépare les catégories à l’avance
 categories = ["Gauche", "Droite", "Centre", "Autre"]
 
-# 🔧 Fonction utilitaire pour extraire l’ID d’une vidéo à partir de l’URL
 def get_video_id(url):
     return url.split("v=")[-1]
 
-# 🔧 Fonction pour récupérer les vidéos à partir d’un flux, avec limite de temps
 def get_recent_videos(url, jours_max=14):
     flux = feedparser.parse(url)
     now = datetime.now()
@@ -28,7 +24,7 @@ def get_recent_videos(url, jours_max=14):
     for entry in flux.entries:
         try:
             published = datetime.fromtimestamp(time.mktime(entry.published_parsed))
-        except Exception:
+        except:
             continue
 
         if now - published <= limite:
@@ -45,36 +41,32 @@ def get_recent_videos(url, jours_max=14):
 
     return videos
 
-# 🌍 Route principale : page d’accueil
 @app.route("/")
 def index():
     videos_par_orientation = {cat: [] for cat in categories}
     videos_recents = []
+    sidebar_videos = {}
 
     for media, data in flux_dict.items():
         flux_url = data["flux"]
         orientation = data.get("orientation", "Autre")
         videos = get_recent_videos(flux_url, jours_max=14)
 
-        # Ajoute au groupe idéologique
-        videos_par_orientation[orientation].extend([
-            dict(v, media=media) for v in videos
-        ])
+        # Séparation par orientation
+        videos_par_orientation[orientation].extend([dict(v, media=media) for v in videos])
+        videos_recents.extend([dict(v, media=media) for v in videos])
 
-        # Ajoute aux dernières vidéos toutes chaînes confondues
-        videos_recents.extend([
-            dict(v, media=media) for v in videos
-        ])
+        # Stockage des 5 dernières pour la sidebar
+        sidebar_videos[media] = videos[:5]
 
-    # Trie les vidéos globales par date de publication
     videos_recents.sort(key=lambda x: x["timestamp"], reverse=True)
 
     return render_template("home.html",
                            flux_dict=flux_dict,
                            videos_par_orientation=videos_par_orientation,
-                           videos_recents=videos_recents)
+                           videos_recents=videos_recents,
+                           sidebar_videos=sidebar_videos)
 
-# 🌍 Page individuelle pour chaque média
 @app.route("/media/<nom>")
 def page_media(nom):
     if nom not in flux_dict:
@@ -82,10 +74,10 @@ def page_media(nom):
 
     flux_url = flux_dict[nom]["flux"]
     videos = get_recent_videos(flux_url, jours_max=60)
+    sidebar_videos = {m: get_recent_videos(data["flux"], jours_max=14)[:5] for m, data in flux_dict.items()}
 
-    return render_template("media.html", media=nom, videos=videos)
+    return render_template("media.html", media=nom, videos=videos, flux_dict=flux_dict, sidebar_videos=sidebar_videos)
 
-# 🚀 Démarrage du serveur
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
